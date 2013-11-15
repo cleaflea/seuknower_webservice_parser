@@ -198,7 +198,43 @@ class AppointedBookItem:
                 "place":self.__place, "appoint_date":self.__appoint_date, "cancel_date":self.__cancel_date,
                 "take_location":self.__take_location, "status":self.__status, "data":self.__data }
 
+class AppointInfoItem:
+    '''
 
+    Distributions:
+        __take_place: 90001 九龙湖总借还处, 00916 丁家桥中文借书处, 00940 四牌楼总借还处
+    '''
+    def __init__(self, call_no, room, room_num, lendable_num, in_num, appoint_count,
+                 appointable_info, take_place, appointable):
+        self.__call_no = call_no
+        self.__room = room
+        self.__room_num = room_num
+        self.__lendable_num = lendable_num
+        self.__in_num = in_num
+        self.__appoint_count = appoint_count
+        self.__appointable_info = appointable_info
+        self.__take_place = take_place
+        self.__appointable = (lambda x: '可以' if x==1 else '不可以')(appointable)
+
+    def __str__(self):
+        s = '\n索书号:' + self.__call_no + \
+            '\n馆藏地:' + self.__room + \
+            '\n馆藏地编号:' + self.__room_num + \
+            '\n可借副本:' + self.__lendable_num + \
+            '\n在馆副本:' + self.__in_num + \
+            '\n已预约数:' + self.__appoint_count + \
+            '\n可否预约:' + self.__appointable_info + \
+            '\n取书地:'
+        for p in self.__take_place:
+            s += (p+'; ')
+        s += '\n能否预约:' + self.__appointable
+        return s
+
+    def to_json_obj(self):
+        return {"call_no":self.__call_no, "room":self.__room, "room_num":self.__room_num,
+                "lendable_num":self.__lendable_num, "in_num":self.__in_num, "appoint_count":self.__appoint_count,
+                "appoint_info":self.__appointable_info, "appointable":self.__appointable,
+                "take_place":self.__take_place}
 
 
 
