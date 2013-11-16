@@ -333,10 +333,32 @@ def parseLibraryService():
     # print res.read()
     appointresult = json.loads(res.read())
     print appointresult['result']
-    
+
+def parseTyxService():
+    '''tyx login'''
+    url = "http://127.0.0.1:8000/seuknower_webservice/tyx/checkAccount/"
+    data = {
+        'card_number' : '213101579',
+        'password' : '213101579',        
+
+    }
+    req = urllib2.Request(url, urllib.urlencode(data))
+    req.add_header('User-Agent',
+                   'Mozilla/5.0 (Windows NT 6.2; WOW64; rv:22.0) Gecko/20100101 Firefox/22.0')
+    res = urllib2.urlopen(req, timeout=8)
+    # print res.read()
+    loginresult = res.read()
+    print loginresult
+
+    '''get morning running count'''
+    url = "http://127.0.0.1:8000/seuknower_webservice/tyx/%s/%s/" % ('213101579', '213101579')
+    uFile = urllib.urlopen(url)
+    print 'morning running count===> ' + str(uFile.read())
+
 if __name__ == '__main__':
     # parseJwcService()
     # parseLibraryService()
-    parseLibraryService()
+    # parseLibraryService()
+    parseTyxService()
     # python 判断类型是否是dict
     # print type({'clea': 'cleantha'}) == dict
